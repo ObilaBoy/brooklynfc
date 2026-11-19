@@ -78,7 +78,7 @@ nav a:hover, nav a:active{
 <a href="shop.html">🛍️ SHOP</a>
 <a href="quiz.html">🧠 QUIZ</a>
 <a href="login.html">🔐 LOGIN</a>
-</nav>
+<a href="highlights.html">🎥 HIGHLIGHTS</a><a href="shop.html">🛍️ SHOP</a></nav>
 <h1>🏟️ SANTIAGO BERNABÉU</h1>
 <p>Home of Real Madrid Since 1947 • Madrid, Spain</p>
 
@@ -140,4 +140,24 @@ nav a:hover, nav a:active{
 
 <div style="text-align:center;padding:20px;background:#0a0a0a;color:#d4af37;border-radius:12px;margin:12px"><b>👑 Created by Brooklyn 👑</b><br><span style="font-size:12px">Founder & Owner • Hala Madrid!</span></div>
 <p><a href="index.html"><button>⬅ Back to Home</button></a></p>
-</body></html>
+
+<div id="anthemBar" style="position:fixed;bottom:0;left:0;right:0;background:#111;border-top:2px solid #FFD700;padding:10px;text-align:center;z-index:1000;display:flex;gap:8px;justify-content:center;flex-wrap:wrap">
+<button onclick="playAnthem()" style="background:#FFD700;color:black;border:none;padding:10px 16px;border-radius:20px;font-weight:bold;cursor:pointer">🔊 PLAY ANTHEM</button>
+<button onclick="toggleMode()" style="background:#222;color:#FFD700;border:1px solid #FFD700;padding:10px 16px;border-radius:20px;font-weight:bold;cursor:pointer">🌙 DARK / LIGHT</button>
+<a href="highlights.html" style="background:#FF0000;color:white;padding:10px 16px;border-radius:20px;font-weight:bold;text-decoration:none">🎥 HIGHLIGHTS</a>
+<a href="shop.html" style="background:#25D366;color:white;padding:10px 16px;border-radius:20px;font-weight:bold;text-decoration:none">🛍️ SHOP</a>
+</div>
+<audio id="anthemAudio" src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3"></audio>
+<script>
+function playAnthem(){
+  let a=document.getElementById('anthemAudio');
+  if(a.paused){a.play(); alert('🎶 HALA MADRID! Hala Madrid y nada mas! 🔊');}
+  else{a.pause();}
+}
+function toggleMode(){
+  let b=document.body;
+  if(b.style.background=='white'){b.style.background='#0a0a0a';b.style.color='white';}
+  else{b.style.background='white';b.style.color='black';}
+}
+</script>
+<div style="height:70px"></div></body></html>
