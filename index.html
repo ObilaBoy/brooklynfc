@@ -145,7 +145,13 @@ function doLogin(){
   localStorage.setItem('bfc_name',name);
   if(rem){localStorage.setItem('bfc_remember_pass',pass);localStorage.setItem('bfc_remember','yes');}
   else{localStorage.removeItem('bfc_remember_pass');localStorage.setItem('bfc_remember','no');}
-  document.getElementById('welcomeMsg').innerHTML="Welcome back, "+name+"! 👑";
+  document.getElementById('welcomeMsg').innerHTML="
+<div style="text-align:center;background:linear-gradient(90deg,#0a0a0a,#2a2a00);color:#d4af37;padding:14px;margin:12px;border-radius:12px;border:2px solid #d4af37">
+<div style="font-size:22px;font-weight:bold">👑 Created by BROOKLYN 👑</div>
+<div style="font-size:13px;margin-top:4px">Founder • Owner • Biggest Real Madrid Fan in the World! • Hala Madrid!</div>
+<div style="font-size:12px;margin-top:4px;opacity:0.8">Website built by Brooklyn - 2026</div>
+</div>
+<p>Welcome back, "+name+"! 👑";
   setTimeout(closeLogin,1000);
 }
 function doLogout(){localStorage.removeItem('bfc_name');localStorage.removeItem('bfc_remember_pass');localStorage.setItem('bfc_remember','no');document.getElementById('welcomeMsg').innerHTML="";alert("Logged out! Hala Madrid!");}
@@ -170,5 +176,5 @@ fetch('https://site.api.espn.com/apis/site/v2/sports/soccer/esp.1/news?team=86&l
   }
 });
 </script>
-</body>
+<div style="text-align:center;padding:20px;background:#0a0a0a;color:#d4af37;margin-top:20px;border-radius:12px"><b>👑 Created by Brooklyn 👑</b><br><span style="font-size:12px">Founder & Owner of Brooklynn Real Madrid Fan Site • Hala Madrid!</span></div></body>
 </html>
