@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>📅 Fixtures - Brooklynn - AUTO!</title>
+<script src="fixtures-data.js"></script>
+<style>
+body{font-family:Arial,sans-serif;background:#0a0a0a;color:white;margin:0;padding:0;text-align:center}
+header{background:linear-gradient(90deg,#FFD700,#fff,#FFD700);color:black;padding:20px}
+header h1{margin:0;font-size:28px}
+nav{background:#111;padding:12px}
+nav a{color:#FFD700;text-decoration:none;margin:0 8px;font-weight:bold}
+.card{background:#1a1a1a;border:2px solid #FFD700;border-radius:15px;max-width:600px;margin:20px auto;padding:20px}
+.next{background:linear-gradient(135deg,#FFD700,#fff);color:black;border-radius:15px;padding:20px;margin-bottom:15px}
+.next h2{margin:0;font-size:26px}
+.fix{background:#222;border-radius:12px;padding:14px;margin:10px 0;text-align:left;display:flex;justify-content:space-between;align-items:center}
+.fix b{color:#FFD700;font-size:16px}
+.fix small{color:#aaa}
+.fix.past{opacity:0.5}
+.badge{background:#FFD700;color:black;padding:4px 10px;border-radius:20px;font-size:12px;font-weight:bold}
+.badge.ucl{background:#0057ff;color:white}
+.badge.away{background:#555;color:white}
+button{background:#FFD700;color:black;border:none;padding:12px 20px;border-radius:10px;font-weight:bold;font-size:15px;cursor:pointer;margin:5px}
+.count{font-size:32px;color:#FFD700;font-weight:bold}
+</style>
+</head>
+<body>
+<header><h1>📅 REAL MADRID FIXTURES 📅</h1><p>AUTO-UPDATING! Never Miss A Match! HALA MADRID!</p></header>
+<nav>
+<a href="index.html">🏠 Home</a>
+<a href="predict.html">🎮 Predict & Win</a>
+<a href="fan-chat.html">💬 Fan Chat LIVE</a>
+<a href="leaderboard.html">🏆 Leaderboard</a>
+<a href="fixtures.html">📅 Fixtures</a>
+</nav>
+
+<div class="card">
+<div class="next">
+<h2>🔥 NEXT MATCH! - AUTO</h2>
+<p style="font-size:22px;font-weight:bold;margin:8px 0" id="nextTitle">Loading...</p>
+<p id="nextInfo">Loading...</p>
+<p style="font-size:20px;font-weight:bold">⏳ <span id="countdown">Loading...</span></p>
+<a href="predict.html"><button style="background:black;color:#FFD700">🎮 PREDICT THIS MATCH NOW!</button></a>
+</div>
+
+<h2>🗓️ UPCOMING FIXTURES - AUTO</h2>
+<div id="upcomingList">Loading...</div>
+<p style="color:#aaa;font-size:13px">✅ This page updates by itself! After each match, the next one moves to the top automatically!</p>
+</div>
+
+<div class="card">
+<h2>✅ LAST RESULT</h2>
+<p style="font-size:22px">Valencia 0 - 3 Real Madrid ⚪🔥<br><small>Sat, 7 Nov 2026 - Mestalla - WIN!</small></p>
+<p>Real Madrid are <b>2nd in La Liga</b> with 30 points! 10 Wins, 2 Losses! 🏆</p>
+</div>
+
+<script>
+let next = getNextMatch();
+document.getElementById('nextTitle').innerText = "⚪ " + next.home + " vs " + next.away + " 🔵";
+document.getElementById('nextInfo').innerHTML = "📅 " + next.display + "<br>🏟️ " + next.stadium + "<br>🏆 " + next.comp;
+
+let upcoming = getUpcoming();
+let html = "";
+upcoming.forEach(g=>{
+  let isUCL = g.comp.includes("Champions") ? "ucl" : "";
+  let badge = g.comp.includes("Champions") ? "UCL" : g.comp.includes("DERBY") ? "DERBY 🔥" : g.comp.includes("CLASICO") ? "CLASICO 🔥🔥" : "LA LIGA";
+  html += `<div class="fix"><div><b>⚪ ${g.home} vs ${g.away}</b><br><small>${g.display} - ${g.stadium}</small></div><span class="badge ${isUCL}">${badge}</span></div>`;
+});
+document.getElementById('upcomingList').innerHTML = html || "No more fixtures! Tell Brooklyn to add new ones!";
+
+let target = new Date(next.date).getTime();
+function tick(){
+  let now = new Date().getTime();
+  let d = target - now;
+  if(d < 0){ document.getElementById('countdown').innerText = "MATCH IS LIVE! HALA MADRID!"; return; }
+  let days = Math.floor(d/(1000*60*60*24));
+  let hrs = Math.floor((d%(1000*60*60*24))/(1000*60*60));
+  let mins = Math.floor((d%(1000*60*60))/(1000*60));
+  let secs = Math.floor((d%(1000*60))/1000);
+  document.getElementById('countdown').innerText = days+" days : "+hrs+"h : "+mins+"m : "+secs+"s";
+}
+setInterval(tick,1000); tick();
+</script>
+</body>
+</html>
