@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>🎮 Predict & Win - Brooklynn</title>
+<script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-database-compat.js"></script>
+<style>
+body{font-family:Arial,sans-serif;background:#0a0a0a;color:white;margin:0;padding:0;text-align:center}
+header{background:linear-gradient(90deg,#FFD700,#fff,#FFD700);color:black;padding:20px}
+header h1{margin:0;font-size:28px}
+nav{background:#111;padding:12px}
+nav a{color:#FFD700;text-decoration:none;margin:0 8px;font-weight:bold}
+.card{background:#1a1a1a;border:2px solid #FFD700;border-radius:15px;max-width:550px;margin:20px auto;padding:20px}
+.match{background:#000;border-radius:12px;padding:15px;margin:12px 0;font-size:20px;font-weight:bold}
+.vs{color:#FFD700;font-size:28px}
+input,select{width:90%;padding:12px;margin:8px 0;border-radius:10px;border:none;font-size:16px;text-align:center;box-sizing:border-box}
+button{background:#FFD700;color:black;border:none;padding:13px 20px;border-radius:10px;font-weight:bold;font-size:16px;cursor:pointer;margin:5px}
+button:hover{background:white}
+button:disabled{background:#555;color:#aaa}
+.pred{background:#222;border-radius:10px;padding:10px;margin:8px 0;text-align:left}
+.pred b{color:#FFD700}
+.scorebox{font-size:50px;margin:10px}
+.points{color:#00ff88;font-weight:bold;font-size:22px}
+</style>
+</head>
+<body>
+<header><h1>🎮 PREDICT & WIN! 🎮</h1><p>Guess the score, Win +100 Points!</p></header>
+<nav>
+<a href="index.html">🏠 Home</a>
+<a href="leaderboard.html">🏆 Leaderboard</a>
+<a href="fan-chat.html">💬 Fan Chat LIVE</a>
+<a href="predict.html">🎮 Predict & Win</a>
+</nav>
+
+<div class="card">
+<h2>⚽ NEXT BIG MATCH</h2>
+<div class="match">⚪ REAL MADRID <span class="vs">VS</span> 🔵 BARCELONA<br><small style="font-size:14px;color:#aaa">El Clasico - Sunday 8pm - Santiago Bernabeu</small></div>
+<p>What will the score be?</p>
+<input id="fanName" placeholder="Your Name - e.g. Brooklyn">
+<div style="display:flex;gap:10px;justify-content:center;align-items:center">
+<input id="homeScore" type="number" placeholder="Madrid" style="width:35%;font-size:22px">
+<span style="font-size:30px">-</span>
+<input id="awayScore" type="number" placeholder="Barça" style="width:35%;font-size:22px">
+</div>
+<p>Who will win?</p>
+<select id="winnerPick">
+<option>⚪ Real Madrid Win</option>
+<option>🤝 Draw</option>
+<option>🔵 Barcelona Win</option>
+</select>
+<button onclick="makePrediction()">🔥 LOCK MY PREDICTION!</button>
+<p id="myPred" style="color:#FFD700;font-weight:bold"></p>
+</div>
+
+<div class="card">
+<h2>🔥 ALL FAN PREDICTIONS - LIVE!</h2>
+<p id="count">Loading...</p>
+<div id="predList"></div>
+</div>
+
+<div class="card">
+<h2>🏆 How To Win Points</h2>
+<p>✅ Exact Score Right = <span class="points">+100 POINTS!</span><br>✅ Winner Right = <span class="points">+50 POINTS!</span><br>❌ Wrong = +10 for trying!<br><br>Top predictors go to <a href="leaderboard.html" style="color:#FFD700">Leaderboard!</a></p>
+<p><b>Brooklyn's Prediction:</b> Real Madrid 3 - 1 Barcelona! HALA MADRID! 🔥</p>
+</div>
+
+<script>
+const firebaseConfig = {
+  apiKey: "AIzaSyBqx9ImUjW-OT31-9pCmyG6BZODZ15a1gk",
+  authDomain: "brooklynn-83301.firebaseapp.com",
+  databaseURL: "https://brooklynn-83301-default-rtdb.firebaseio.com",
+  projectId: "brooklynn-83301",
+  storageBucket: "brooklynn-83301.firebasestorage.app",
+  messagingSenderId: "1007783893715",
+  appId: "1:1007783893715:web:e4ad11f4d63aab8ef11226",
+  measurementId: "G-WV614K5MEQ"
+};
+firebase.initializeApp(firebaseConfig);
+const db = firebase.database();
+const predRef = db.ref('predictions');
+
+let myName = localStorage.getItem('brooklynn_myname') || "";
+if(myName) document.getElementById('fanName').value = myName;
+
+predRef.limitToLast(30).on('value', (snap)=>{
+  let data = snap.val() || {};
+  let list = Object.values(data).reverse();
+  let html = "";
+  list.forEach(p=>{
+    html += `<div class="pred"><b>${p.name}</b> says: ${p.score} - ${p.winner}<br><small>${p.time}</small></div>`;
+  });
+  document.getElementById('predList').innerHTML = html || "<p style='color:#aaa'>No predictions yet! Be FIRST!</p>";
+  document.getElementById('count').innerText = list.length + " fans predicted!";
+});
+
+function makePrediction(){
+  let n = document.getElementById('fanName').value.trim();
+  let h = document.getElementById('homeScore').value;
+  let a = document.getElementById('awayScore').value;
+  let w = document.getElementById('winnerPick').value;
+  if(!n){alert("Type your name first! 👑"); return;}
+  if(h==="" || a===""){alert("Type BOTH scores! e.g. 3 - 1"); return;}
+  myName = n; localStorage.setItem('brooklynn_myname', n);
+  let now = new Date().toLocaleTimeString([], {hour:'2-digit', minute:'2-digit'});
+  predRef.push({name:n, score: h + " - " + a, winner:w, time:now});
+  document.getElementById('myPred').innerText = "✅ LOCKED! You predicted Real Madrid " + h + " - " + a + " Barcelona! Good luck! 🔥";
+  alert("PREDICTION LOCKED! 🔥 If you are right, you get +100 points!");
+}
+</script>
+</body>
+</html>
