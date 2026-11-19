@@ -32,7 +32,7 @@ input{padding:12px;width:85%;margin:8px 0;border:1px solid #ccc;border-radius:8p
 <div class="card">
 <h3>🔥 Next Match - AUTO UPDATES!</h3>
 <p id="nextMatch">Loading Real Madrid's real next match...</p>
-<p style="font-size:12px;color:grey">Auto-updates from La Liga • Powered by TheSportsDB</p>
+<p style="font-size:12px;color:grey">Auto-updates from La Liga • Powered by ESPN</p>
 </div>
 
 <div class="card">
@@ -102,12 +102,15 @@ let rem=localStorage.getItem('bfc_remember');
 if(saved && rem!=='no'){document.getElementById('welcomeMsg').innerHTML="Welcome back, "+saved+"! 👑";}
 
 // --- AUTO NEXT MATCH - Real Madrid ID 133739 ---
-fetch('https://www.thesportsdb.com/api/v1/json/3/eventsnext.php?id=133739')
+fetch('https://site.api.espn.com/apis/site/v2/sports/soccer/esp.1/teams/86/schedule')
 .then(r=>r.json())
 .then(d=>{
   if(d.events && d.events[0]){
     let e=d.events[0];
-    document.getElementById('nextMatch').innerHTML = "<b>"+e.strEvent+"</b><br>"+e.dateEvent+" • "+(e.strTime||"")+"<br>"+e.strLeague+" • "+(e.strVenue||"Santiago Bernabéu");
+    let name=e.name || 'Real Madrid Match';
+    let date=new Date(e.date).toLocaleString();
+    let comp=e.competitions && e.competitions[0] ? e.competitions[0].venue.fullName : 'Santiago Bernabéu';
+    document.getElementById('nextMatch').innerHTML = "<b>"+name+"</b><br>"+date+"<br>"+comp;
   } else {
     document.getElementById('nextMatch').innerHTML="Real Madrid vs Next Opponent<br>Check back soon - La Liga";
   }
