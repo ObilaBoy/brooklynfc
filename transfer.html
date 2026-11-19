@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>📰 Transfer News AUTO - Brooklynn</title>
+<script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-database-compat.js"></script>
+<script src="transfer-data.js"></script>
+<style>
+body{font-family:Arial,sans-serif;background:#0a0a0a;color:white;margin:0;padding:0;text-align:center}
+header{background:linear-gradient(90deg,#FFD700,#fff,#FFD700);color:black;padding:20px}
+header h1{margin:0;font-size:28px}
+nav{background:#111;padding:12px}
+nav a{color:#FFD700;text-decoration:none;margin:0 8px;font-weight:bold}
+.card{background:#1a1a1a;border:2px solid #FFD700;border-radius:15px;max-width:600px;margin:20px auto;padding:20px;text-align:left}
+.rumour{background:#222;border-radius:12px;padding:16px;margin:14px 0;border-left:5px solid #FFD700}
+.rumour.hot{border-left-color:#ff0066}
+.rumour.done{border-left-color:#00ff88}
+.rumour h3{margin:0 0 5px 0;color:#FFD700}
+.tag{font-size:11px;padding:4px 10px;border-radius:20px;font-weight:bold;color:black;background:#FFD700}
+.tag.hot{background:#ff0066;color:white}
+.tag.done{background:#00ff88}
+.tag.no{background:#555;color:white}
+.vote{margin-top:10px;display:flex;gap:8px}
+.vote button{flex:1;padding:11px;border:none;border-radius:10px;font-weight:bold;cursor:pointer;font-size:14px}
+.yes{background:#00ff88;color:black}
+.no{background:#ff4444;color:white}
+.bar{height:14px;background:#333;border-radius:10px;margin-top:10px;overflow:hidden;display:flex}
+.barYes{background:#00ff88;height:100%}
+.barNo{background:#ff4444;height:100%}
+.perc{font-size:13px;margin-top:5px;color:#FFD700;font-weight:bold}
+input{width:90%;padding:12px;margin:8px 0;border-radius:10px;border:none;font-size:15px;text-align:center}
+button.send{background:#FFD700;color:black;border:none;padding:12px 20px;border-radius:10px;font-weight:bold;cursor:pointer}
+</style>
+</head>
+<body>
+<header><h1>📰 TRANSFER NEWS AUTO 📰</h1><p>Auto-Updating! Votes LIVE! HALA MADRID!</p></header>
+<nav>
+<a href="index.html">🏠 Home</a>
+<a href="predict.html">🎮 Predict & Win</a>
+<a href="fixtures.html">📅 Fixtures</a>
+<a href="fan-chat.html">💬 Fan Chat LIVE</a>
+<a href="transfer.html">📰 Transfer News</a>
+</nav>
+<div class="card">
+<h2 style="text-align:center">🔥 HOT RUMOURS - VOTE YES / NO! - AUTO</h2>
+<p style="text-align:center;color:#aaa;font-size:13px">✅ Votes are LIVE! If your friend votes, you see it move!</p>
+<div id="rumourList">Loading transfers...</div>
+</div>
+<div class="card" style="text-align:center">
+<h2>💬 SUGGEST A SIGNING!</h2>
+<input id="fanName" placeholder="Your Name - e.g. Brooklyn">
+<input id="playerName" placeholder="Player Name - e.g. Haaland, Osimhen">
+<button class="send" onclick="suggest()">🔥 SUGGEST PLAYER!</button>
+<p id="suggestMsg" style="color:#FFD700;font-weight:bold"></p>
+<h3>🔥 Fan Suggestions - LIVE!</h3>
+<div id="suggestList"></div>
+</div>
+<script>
+const firebaseConfig = {
+  apiKey: "AIzaSyBqx9ImUjW-OT31-9pCmyG6BZODZ15a1gk",
+  authDomain: "brooklynn-83301.firebaseapp.com",
+  databaseURL: "https://brooklynn-83301-default-rtdb.firebaseio.com",
+  projectId: "brooklynn-83301",
+  storageBucket: "brooklynn-83301.firebasestorage.app",
+  messagingSenderId: "1007783893715",
+  appId: "1:1007783893715:web:e4ad11f4d63aab8ef11226",
+  measurementId: "G-WV614K5MEQ"
+};
+firebase.initializeApp(firebaseConfig);
+const db = firebase.database();
+const votesRef = db.ref('transfer_votes');
+
+// Render rumours from AUTO data file
+function renderRumours(votesData){
+  let list = getActiveTransfers();
+  let html = "";
+  list.forEach(t=>{
+    let v = votesData[t.id] || {yes:50, no:50};
+    let total = v.yes + v.no;
+    let yp = Math.round(v.yes/total*100);
+    let np = 100-yp;
+    let tagClass = t.status==='hot'?'hot':t.status==='done'?'done':t.status==='rejected'?'no':'';
+    html += `<div class="rumour ${t.status}"><span class="tag ${tagClass}">${t.tag}</span><h3>${t.flag} ${t.name} to Real Madrid?</h3><p>From: ${t.club} - ${t.desc}</p>${t.brooklyn?`<p><b>Brooklyn's Opinion:</b> ${t.brooklyn}</p>`:''}${t.status==='done'?'':`<div class="vote"><button class="yes" onclick="vote('${t.id}','yes')">✅ YES! SIGN HIM!</button><button class="no" onclick="vote('${t.id}','no')">❌ NO!</button></div><div class="bar"><div class="barYes" style="width:${yp}%"></div><div class="barNo" style="width:${np}%"></div></div><p class="perc">${yp}% YES - ${np}% NO - ${total} fans voted! - LIVE!</p>`}</div>`;
+  });
+  document.getElementById('rumourList').innerHTML = html;
+}
+// LIVE votes from Firebase - updates for EVERYONE instantly!
+votesRef.on('value', (snap)=>{
+  let data = snap.val() || {};
+  // Seed if empty
+  if(Object.keys(data).length===0){
+    let seed = {haaland:{yes:92,no:36}, wirtz:{yes:58,no:31}, saka:{yes:37,no:39}, osimhen:{yes:88,no:12}, neymar:{yes:46,no:164}};
+    votesRef.set(seed);
+    data = seed;
+  }
+  renderRumours(data);
+});
+function vote(id, choice){
+  if(localStorage.getItem('voted_'+id)){ alert("You already voted for this player! 👑 One vote per fan!"); return; }
+  let ref = votesRef.child(id+'/'+choice);
+  ref.transaction(c => (c||0)+1);
+  localStorage.setItem('voted_'+id,'1');
+  alert(choice==='yes' ? "✅ YES! You want him in WHITE!" : "❌ NO! You don't want him!");
+}
+const sugRef = db.ref('transfer_suggestions');
+sugRef.limitToLast(20).on('value', (snap)=>{
+  let data = snap.val() || {};
+  let list = Object.values(data).reverse();
+  let html = "";
+  list.forEach(s=>{ html += `<div style="background:#222;padding:10px;border-radius:10px;margin:8px 0;text-align:left"><b style="color:#FFD700">${s.name}</b> says: Sign <b>${s.player}</b>! 🔥<br><small>${s.time}</small></div>`; });
+  document.getElementById('suggestList').innerHTML = html || "<p style='color:#aaa'>No suggestions yet! Be FIRST!</p>";
+});
+function suggest(){
+  let n = document.getElementById('fanName').value.trim();
+  let pl = document.getElementById('playerName').value.trim();
+  if(!n || !pl){ alert("Type your name AND player name!"); return; }
+  let now = new Date().toLocaleTimeString([], {hour:'2-digit', minute:'2-digit'});
+  sugRef.push({name:n, player:pl, time:now});
+  document.getElementById('suggestMsg').innerText = "✅ SUGGESTED! " + pl + " to Madrid!";
+  document.getElementById('playerName').value = "";
+}
+</script>
+</body>
+</html>
