@@ -1,52 +1,85 @@
+<!DOCTYPE html>
 <html>
-<head><meta charset="UTF-8">
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Brooklyn FC</title>
 <style>
-body { background:#0a3d1a; color:white; text-align:center; font-family:sans-serif; margin:0; }
-.nav { background:black; padding:25px 5px; }
-.nav a { color:white; text-decoration:none; margin:6px; font-weight:bold; font-size:22px; }
-.hero { padding:70px 5px 20px 5px; }
-.hero h1 { font-size:78px; margin:5px 0; line-height:1.0; }
-.hero p { font-size:28px; margin:10px 0; }
-.card { background:white; color:black; width:98%; margin:25px auto; padding:40px 10px; border-radius:25px; }
-.card h2 { font-size:40px; margin:0 0 15px 0; }
-.card p { font-size:28px; line-height:1.4; }
-.card:active { background:#ffe600; }
+body{margin:0;font-family:Arial;background:#f2f2f2;text-align:center}
+nav{background:black;color:white;padding:12px;font-weight:bold}
+nav a{color:white;text-decoration:none;margin:0 8px}
+.header{background:#0b4d2e;color:white;padding:25px 15px}
+.card{background:white;margin:12px;padding:18px;border-radius:12px}
+button{background:#0b4d2e;color:white;border:none;padding:12px 20px;border-radius:8px;font-size:16px}
+input{padding:12px;width:85%;margin:8px 0;border:1px solid #ccc;border-radius:8px;font-size:16px}
+#loginBox{display:none;position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,0.7);padding-top:100px}
+.loginInner{background:white;margin:20px;padding:20px;border-radius:12px}
+.remember{text-align:left;margin:5px 20px;font-size:14px}
+.remember input{width:auto;padding:0}
 </style>
 </head>
 <body>
-
-<div class="nav">
-<a href="index.html">HOME</a>
-<a href="team.html">TEAM</a>
-<a href="matches.html">MATCHES</a>
-<a href="news.html">NEWS</a>
-<a href="login.html">LOGIN</a>
+<nav>HOME TEAM MATCHES NEWS <a href="#" onclick="openLogin()">LOGIN</a> <a href="#" onclick="doLogout()">LOGOUT</a></nav>
+<div class="header">
+⚽<h1>BROOKLYN<br>FC</h1>⚽
+<p>Welcome to the best club in Lagos!<br>Home of Champions</p>
+<p id="welcomeMsg" style="color:yellow;font-weight:bold"></p>
 </div>
-
-<div class="hero">
-<h1>⚽<br>BROOKLYN<br>FC<br>⚽</h1>
-<p>Welcome to the best club in Lagos!</p>
-<p>Home of Champions</p>
-</div>
-
-<div class="card" onclick="window.location.href='matches.html'">
-<h2>🔥 Next Match</h2>
-<p>Brooklyn FC vs Lagos Lions<br>Saturday, 10am - Brooklyn Stadium</p>
-<p>👆 TAP TO SEE MATCHES</p>
-</div>
-
-<div class="card" onclick="window.location.href='team.html'">
-<h2>⭐ Star Player</h2>
-<p>No. 10 - Our Striker<br>25 Goals This Season!</p>
-<p>👆 TAP TO SEE TEAM</p>
-</div>
-
-<div class="card" onclick="window.location.href='news.html'">
-<h2>📰 Latest News</h2>
-<p>Brooklyn FC Wins Again!<br>Fans celebrating all over Lagos!</p>
-<p>👆 TAP TO SEE NEWS</p>
-</div>
-
+<div class="card"><h3>🔥 Next Match</h3><p>Brooklyn FC vs Lagos Lions<br>Saturday, 10am - Brooklyn Stadium</p></div>
+<div class="card"><h3>⭐ Star Player</h3><p>No. 10 - Our Striker<br>25 Goals This Season!</p></div>
+<div class="card"><h3>📰 Latest News</h3><p>Brooklyn FC Wins Again!</p></div>
+<div id="loginBox"><div class="loginInner">
+<h2>Login to Brooklyn FC</h2>
+<input id="nameInput" placeholder="Enter your name"><br>
+<input id="passInput" type="password" placeholder="Create / Enter password"><br>
+<div class="remember"><input type="checkbox" id="rememberCheck" checked> <label for="rememberCheck">Remember Me - Keep me logged in</label></div>
+<button onclick="doLogin()">LOGIN / CREATE ACCOUNT</button><br><br>
+<button onclick="closeLogin()" style="background:grey">Close</button>
+<p id="loginMsg"></p>
+</div></div>
+<script>
+function openLogin(){
+  let savedName=localStorage.getItem('bfc_name');
+  let savedPass=localStorage.getItem('bfc_remember_pass');
+  if(savedName) document.getElementById('nameInput').value=savedName;
+  if(savedPass) document.getElementById('passInput').value=savedPass;
+  document.getElementById('loginBox').style.display='block'
+}
+function closeLogin(){document.getElementById('loginBox').style.display='none'}
+function doLogin(){
+  let name=document.getElementById('nameInput').value.trim();
+  let pass=document.getElementById('passInput').value;
+  let remember=document.getElementById('rememberCheck').checked;
+  if(!name||!pass){document.getElementById('loginMsg').innerHTML="Please enter name and password!";return;}
+  let savedPass=localStorage.getItem('bfc_pass_'+name);
+  if(savedPass){
+    if(savedPass!==pass){document.getElementById('loginMsg').innerHTML="Wrong password for "+name+"! Try again.";return;}
+    document.getElementById('loginMsg').innerHTML="Welcome back "+name+"!";
+  } else {
+    localStorage.setItem('bfc_pass_'+name,pass);
+    document.getElementById('loginMsg').innerHTML="Account created! Welcome "+name+"!";
+  }
+  if(remember){
+    localStorage.setItem('bfc_name',name);
+    localStorage.setItem('bfc_remember_pass',pass);
+    localStorage.setItem('bfc_remember','yes');
+  } else {
+    localStorage.setItem('bfc_name',name);
+    localStorage.removeItem('bfc_remember_pass');
+    localStorage.setItem('bfc_remember','no');
+  }
+  document.getElementById('welcomeMsg').innerHTML="Welcome back, "+name+"! 💚";
+  setTimeout(closeLogin,1000);
+}
+function doLogout(){
+  localStorage.removeItem('bfc_name');
+  localStorage.removeItem('bfc_remember_pass');
+  localStorage.setItem('bfc_remember','no');
+  document.getElementById('welcomeMsg').innerHTML="";
+  alert("Logged out! See you soon!");
+}
+let saved=localStorage.getItem('bfc_name');
+let rem=localStorage.getItem('bfc_remember');
+if(saved && rem!=='no'){document.getElementById('welcomeMsg').innerHTML="Welcome back, "+saved+"! 💚";}
+</script>
 </body>
 </html>
