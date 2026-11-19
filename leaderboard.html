@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>🏆 Leaderboard - Brooklynn</title>
+<style>
+body{font-family:Arial,sans-serif;background:#0a0a0a;color:white;margin:0;padding:0;text-align:center}
+header{background:linear-gradient(90deg,#FFD700,#fff,#FFD700);color:black;padding:20px}
+header h1{margin:0;font-size:32px}
+nav{background:#111;padding:12px}
+nav a{color:#FFD700;text-decoration:none;margin:0 10px;font-weight:bold}
+.card{background:#1a1a1a;border:2px solid #FFD700;border-radius:15px;max-width:500px;margin:20px auto;padding:20px}
+input{width:90%;padding:12px;margin:8px 0;border-radius:10px;border:none;font-size:16px;text-align:center}
+button{background:#FFD700;color:black;border:none;padding:12px 25px;border-radius:10px;font-weight:bold;font-size:16px;cursor:pointer;margin:5px}
+button:hover{background:white}
+table{width:100%;border-collapse:collapse;margin-top:15px}
+th{background:#FFD700;color:black;padding:10px}
+td{padding:12px;border-bottom:1px solid #333}
+.rank1{background:#FFD700;color:black;font-weight:bold}
+.rank2{background:#C0C0C0;color:black;font-weight:bold}
+.rank3{background:#CD7F32;color:black;font-weight:bold}
+.crown{font-size:40px}
+</style>
+</head>
+<body>
+<header><h1>🏆 BROOKLYNN LEADERBOARD 🏆</h1><p>Who is the BIGGEST Madrid Fan?</p></header>
+<nav>
+<a href="index.html">🏠 Home</a>
+<a href="team.html">Team</a>
+<a href="goat.html">🐐 GOAT</a>
+<a href="fan-zone.html">Fan Zone</a>
+<a href="leaderboard.html">🏆 Leaderboard</a>
+</nav>
+
+<div class="card">
+<div class="crown">👑</div>
+<h2>Add Your Score!</h2>
+<p>Did you play the Quiz? Enter your score!</p>
+<input id="fanName" placeholder="Your Name - e.g. Brooklyn">
+<input id="fanScore" type="number" placeholder="Your Score - e.g. 98">
+<br>
+<button onclick="addScore()">🔥 ADD ME TO LEADERBOARD!</button>
+<button onclick="clearBoard()" style="background:#ff4444;color:white">Reset</button>
+</div>
+
+<div class="card">
+<h2>🥇 TOP FANS</h2>
+<table>
+<thead><tr><th>Rank</th><th>Fan</th><th>Points</th></tr></thead>
+<tbody id="board"></tbody>
+</table>
+<p id="empty" style="color:#aaa">No fans yet! Be the FIRST! 👑</p>
+</div>
+
+<div class="card">
+<h3>How to get points?</h3>
+<p>🎮 Play Quiz = +10 per correct answer<br>⚽ Predict Score Right = +100<br>💬 Leave Shoutout = +20<br>🔥 Visit Every Day = +10</p>
+<p><b>Can YOU beat Brooklyn?</b></p>
+</div>
+
+<script>
+let leaders = JSON.parse(localStorage.getItem('brooklynn_leaders') || '[]');
+// Add default champions if empty first time
+if(leaders.length===0){
+  leaders = [
+    {name:"Brooklyn 👑", score:98},
+    {name:"Obilaboy", score:85},
+    {name:"Ronaldo Fan", score:72}
+  ];
+  localStorage.setItem('brooklynn_leaders', JSON.stringify(leaders));
+}
+function showBoard(){
+  leaders.sort((a,b)=>b.score-a.score);
+  leaders = leaders.slice(0,10);
+  let html = "";
+  leaders.forEach((f,i)=>{
+    let cls = i===0?"rank1":i===1?"rank2":i===2?"rank3":"";
+    let medal = i===0?"🥇":i===1?"🥈":i===2?"🥉":(i+1);
+    html += `<tr class="${cls}"><td>${medal}</td><td>${f.name}</td><td>${f.score}</td></tr>`;
+  });
+  document.getElementById('board').innerHTML = html;
+  document.getElementById('empty').style.display = leaders.length?"none":"block";
+}
+function addScore(){
+  let n = document.getElementById('fanName').value.trim();
+  let s = parseInt(document.getElementById('fanScore').value);
+  if(!n){alert("Type your name first! 👑"); return;}
+  if(isNaN(s)){alert("Type your score! e.g. 95"); return;}
+  leaders.push({name:n, score:s});
+  localStorage.setItem('brooklynn_leaders', JSON.stringify(leaders));
+  showBoard();
+  alert("YESSS! " + n + " added with " + s + " points! 🔥");
+  document.getElementById('fanName').value="";
+  document.getElementById('fanScore').value="";
+}
+function clearBoard(){
+  if(confirm("Reset all? Only Brooklyn can do this!")){
+    leaders=[]; localStorage.setItem('brooklynn_leaders', JSON.stringify(leaders)); showBoard();
+  }
+}
+showBoard();
+</script>
+</body>
+</html>
