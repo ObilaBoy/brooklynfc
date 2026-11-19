@@ -4,22 +4,19 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Real Madrid - Hala Madrid!</title>
 <style>
-body{margin:0;font-family:Arial;background:#f5f5f5;text-align:center;scroll-behavior:smooth}
+body{margin:0;font-family:Arial;background:#f5f5f5;text-align:center}
 nav{background:#0a0a0a;color:#d4af37;padding:12px;font-weight:bold;position:sticky;top:0;z-index:100}
-nav a{color:#d4af37;text-decoration:none;margin:0 6px;cursor:pointer}
-nav a:hover{color:white}
-.header{background:linear-gradient(180deg,#ffffff,#f9eec7);color:#0a0a0a;padding:25px 15px;border-bottom:4px solid #d4af37}
+nav a{color:#d4af37;text-decoration:none;margin:0 6px}
+.header{background:linear-gradient(180deg,#ffffff,#f9eec7);padding:25px 15px;border-bottom:4px solid #d4af37}
 .header h1{margin:5px;font-size:32px}
-.card{background:white;margin:12px;padding:18px;border-radius:12px;border-left:5px solid #d4af37}
-button{background:#d4af37;color:black;border:none;padding:12px 20px;border-radius:8px;font-size:16px;font-weight:bold}
+.crest{width:110px;height:110px;object-fit:contain;background:white;border-radius:50%;border:4px solid #d4af37;padding:5px}
+.card{background:white;margin:12px;padding:18px;border-radius:12px;border-left:5px solid #d4af37;text-align:left}
+button{background:#d4af37;border:none;padding:12px 20px;border-radius:8px;font-size:16px;font-weight:bold;width:100%;margin-top:8px}
 input{padding:12px;width:85%;margin:8px 0;border:1px solid #ccc;border-radius:8px;font-size:16px}
 #loginBox{display:none;position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,0.7);padding-top:100px;z-index:200}
-.loginInner{background:white;margin:20px;padding:20px;border-radius:12px}
-.remember{text-align:left;margin:5px 20px;font-size:14px}
-.remember input{width:auto;padding:0}
-.player{display:flex;align-items:center;gap:12px;text-align:left;background:#fff8e1;padding:10px;border-radius:10px;margin:8px 0}
-.player img{width:70px;height:70px;object-fit:cover;border-radius:50%;border:3px solid #d4af37;background:#ddd}
-.matchRow{text-align:left;background:#fff8e1;padding:10px;border-radius:10px;margin:6px 0;font-size:14px}
+.loginInner{background:white;margin:20px;padding:20px;border-radius:12px;text-align:center}
+.mourinho{display:flex;gap:12px;background:#fff8e1;padding:12px;border-radius:10px;align-items:center}
+.mourinho img{width:90px;height:90px;object-fit:cover;border-radius:50%;border:3px solid #d4af37}
 table{width:100%;border-collapse:collapse;font-size:13px}
 th,td{padding:8px;border-bottom:1px solid #eee;text-align:left}
 th{background:#0a0a0a;color:#d4af37}
@@ -27,136 +24,100 @@ tr.real{background:#fff3c4;font-weight:bold}
 </style>
 </head>
 <body>
-<nav>
-<a onclick="goHome()">HOME</a>
-<a href="team.html">TEAM</a>
-<a href="matches.html">MATCHES</a>
-<a href="news.html">NEWS</a>
-<a onclick="openLogin()">LOGIN</a>
-<a onclick="doLogout()">LOGOUT</a>
-</nav>
+<nav><a href="index.html">HOME</a> <a href="team.html">TEAM</a> <a href="matches.html">MATCHES</a> <a href="news.html">NEWS</a> <a href="#" onclick="openLogin()">LOGIN</a> <a href="#" onclick="doLogout()">LOGOUT</a></nav>
 
-<div class="header" id="homeSection">
-<div style="font-size:50px">👑</div>
-<h1>REAL MADRID<br>C.F.</h1>
+<div class="header">
+<img class="crest" src="https://upload.wikimedia.org/wikipedia/en/thumb/5/56/Real_Madrid_CF.svg/800px-Real_Madrid_CF.svg.png" onerror="this.src='https://a.espncdn.com/i/teamlogos/soccer/500/86.png'">
+<h1>REAL MADRID C.F.</h1>
 <p>Welcome to the best club in the world!<br>15x Champions League Winners - Hala Madrid!</p>
 <p id="welcomeMsg" style="color:#b8860b;font-weight:bold"></p>
 </div>
 
-<div class="card" id="matchSection">
-<h3>🔥 Next Match - AUTO</h3>
-<p id="nextMatch">Loading...</p>
-<h3>📅 Next 5 Fixtures</h3>
-<div id="fixtures">Loading fixtures...</div>
-<h3>🏆 La Liga Table - LIVE</h3>
-<div id="table">Loading La Liga table...</div>
+<div class="card">
+<h2>👔 THE BOSS</h2>
+<div class="mourinho">
+<img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/5f/Jose_Mourinho_2017.jpg/440px-Jose_Mourinho_2017.jpg">
+<div><b>José Mourinho - Manager</b><br><span style="font-size:13px">The Special One is BACK! 178 Matches • 127 Wins<br>"I am Real Madrid. Hala Madrid!"</span><br><a href="team.html"><button style="width:auto;padding:8px 14px">See Full Team →</button></a></div>
+</div>
 </div>
 
-<div class="card" id="teamSection">
-<h3>⭐ Star Players - Preview</h3>
-<div class="player"><img src="https://a.espncdn.com/i/headshots/soccer/players/full/359520.png"><div><b>Kylian Mbappé - No. 9</b><br>Striker • France</div></div>
-<div class="player"><img src="https://a.espncdn.com/i/headshots/soccer/players/full/415026.png"><div><b>Vinícius Jr - No. 7</b><br>Winger • Brazil</div></div>
-<div class="player"><img src="https://a.espncdn.com/i/headshots/soccer/players/full/488365.png"><div><b>Jude Bellingham - No. 5</b><br>Midfielder • England</div></div>
-<p style="font-size:13px;color:grey">Full lineup + biography coming in TEAM page next!</p>
+<div class="card">
+<h2>🔥 NEXT MATCH - Preview</h2>
+<p id="nextMatch" style="font-size:17px;font-weight:bold">Loading...</p>
+<a href="matches.html"><button>See All Matches + Highlights →</button></a>
 </div>
 
-<div class="card" id="newsSection">
-<h3>📰 Latest News</h3>
-<p><b>Real Madrid Wins Again at the Bernabéu!</b><br>Hala Madrid y Nada Más!</p>
+<div class="card">
+<h2>🏆 LA LIGA - Top 3 Preview</h2>
+<div id="top3">Loading table...</div>
+<a href="matches.html"><button>See Full Table (20 Teams) →</button></a>
+</div>
+
+<div class="card">
+<h2>📰 LATEST NEWS - Preview</h2>
+<div id="newsPreview">Loading news...</div>
+<a href="news.html"><button>See All News →</button></a>
+</div>
+
+<div class="card" style="text-align:center">
+<h2>⭐ STAR PLAYERS</h2>
+<p>Mbappé • Vinícius • Bellingham • Courtois</p>
+<a href="team.html"><button>See Full Squad + Biography →</button></a>
 </div>
 
 <div id="loginBox"><div class="loginInner">
 <h2>Login to Real Madrid</h2>
 <input id="nameInput" placeholder="Enter your name"><br>
 <input id="passInput" type="password" placeholder="Create / Enter password"><br>
-<div class="remember"><input type="checkbox" id="rememberCheck" checked> <label for="rememberCheck">Remember Me - Keep me logged in</label></div>
+<label><input type="checkbox" id="rememberCheck" checked style="width:auto"> Remember Me</label><br>
 <button onclick="doLogin()">LOGIN / CREATE ACCOUNT</button><br><br>
 <button onclick="closeLogin()" style="background:grey;color:white">Close</button>
 <p id="loginMsg"></p>
 </div></div>
 
 <script>
-function goHome(){window.scrollTo({top:0,behavior:'smooth'})}
-function goTo(id){document.getElementById(id).scrollIntoView({behavior:'smooth'})}
 function openLogin(){
-  let savedName=localStorage.getItem('bfc_name');
-  let savedPass=localStorage.getItem('bfc_remember_pass');
-  if(savedName) document.getElementById('nameInput').value=savedName;
-  if(savedPass) document.getElementById('passInput').value=savedPass;
+  let n=localStorage.getItem('bfc_name'); let p=localStorage.getItem('bfc_remember_pass');
+  if(n) document.getElementById('nameInput').value=n;
+  if(p) document.getElementById('passInput').value=p;
   document.getElementById('loginBox').style.display='block'
 }
 function closeLogin(){document.getElementById('loginBox').style.display='none'}
 function doLogin(){
   let name=document.getElementById('nameInput').value.trim();
   let pass=document.getElementById('passInput').value;
-  let remember=document.getElementById('rememberCheck').checked;
-  if(!name||!pass){document.getElementById('loginMsg').innerHTML="Please enter name and password!";return;}
-  let savedPass=localStorage.getItem('bfc_pass_'+name);
-  if(savedPass){
-    if(savedPass!==pass){document.getElementById('loginMsg').innerHTML="Wrong password for "+name+"! Try again.";return;}
-    document.getElementById('loginMsg').innerHTML="Welcome back "+name+"!";
-  } else {
-    localStorage.setItem('bfc_pass_'+name,pass);
-    document.getElementById('loginMsg').innerHTML="Account created! Welcome "+name+"!";
-  }
-  if(remember){
-    localStorage.setItem('bfc_name',name);
-    localStorage.setItem('bfc_remember_pass',pass);
-    localStorage.setItem('bfc_remember','yes');
-  } else {
-    localStorage.setItem('bfc_name',name);
-    localStorage.removeItem('bfc_remember_pass');
-    localStorage.setItem('bfc_remember','no');
-  }
+  let rem=document.getElementById('rememberCheck').checked;
+  if(!name||!pass){document.getElementById('loginMsg').innerHTML="Enter name + password!";return;}
+  let saved=localStorage.getItem('bfc_pass_'+name);
+  if(saved && saved!==pass){document.getElementById('loginMsg').innerHTML="Wrong password!";return;}
+  if(!saved) localStorage.setItem('bfc_pass_'+name,pass);
+  localStorage.setItem('bfc_name',name);
+  if(rem){localStorage.setItem('bfc_remember_pass',pass);localStorage.setItem('bfc_remember','yes');}
+  else{localStorage.removeItem('bfc_remember_pass');localStorage.setItem('bfc_remember','no');}
   document.getElementById('welcomeMsg').innerHTML="Welcome back, "+name+"! 👑";
   setTimeout(closeLogin,1000);
 }
-function doLogout(){
-  localStorage.removeItem('bfc_name');
-  localStorage.removeItem('bfc_remember_pass');
-  localStorage.setItem('bfc_remember','no');
-  document.getElementById('welcomeMsg').innerHTML="";
-  alert("Logged out! Hala Madrid!");
-}
-let saved=localStorage.getItem('bfc_name');
-let rem=localStorage.getItem('bfc_remember');
+function doLogout(){localStorage.removeItem('bfc_name');localStorage.removeItem('bfc_remember_pass');localStorage.setItem('bfc_remember','no');document.getElementById('welcomeMsg').innerHTML="";alert("Logged out! Hala Madrid!");}
+let saved=localStorage.getItem('bfc_name'); let rem=localStorage.getItem('bfc_remember');
 if(saved && rem!=='no'){document.getElementById('welcomeMsg').innerHTML="Welcome back, "+saved+"! 👑";}
 
-// --- FIXTURES: Next 5 matches ---
 fetch('https://site.api.espn.com/apis/site/v2/sports/soccer/esp.1/teams/86/schedule')
-.then(r=>r.json())
-.then(d=>{
-  if(d.events && d.events.length){
-    let first=d.events[0];
-    document.getElementById('nextMatch').innerHTML="<b>"+first.name+"</b><br>"+new Date(first.date).toLocaleString()+"<br>"+(first.competitions[0].venue.fullName||"Bernabéu");
-    let html="";
-    d.events.slice(0,5).forEach(e=>{
-      html+="<div class='matchRow'><b>"+e.name+"</b><br>"+new Date(e.date).toLocaleDateString()+" • "+(e.competitions[0].venue.fullName||"")+"</div>";
-    });
-    document.getElementById('fixtures').innerHTML=html;
-  }
-})
-.catch(()=>{document.getElementById('fixtures').innerHTML="Real Madrid vs Barcelona - El Clásico<br>Check back soon";});
-
-// --- LA LIGA TABLE ---
+.then(r=>r.json()).then(d=>{
+  if(d.events && d.events[0]){let e=d.events[0]; document.getElementById('nextMatch').innerHTML=e.name+"<br><span style='font-size:13px;font-weight:normal'>"+new Date(e.date).toLocaleString()+" • "+(e.competitions[0].venue.fullName||"Bernabéu")+"</span>";}
+});
 fetch('https://site.api.espn.com/apis/site/v2/sports/soccer/esp.1/standings')
-.then(r=>r.json())
-.then(d=>{
-  try{
-    let entries=d.children[0].standings.entries;
-    let html="<table><tr><th>#</th><th>Team</th><th>P</th><th>W</th><th>Pts</th></tr>";
-    entries.slice(0,10).forEach((t,i)=>{
-      let isReal=t.team.displayName.includes("Real Madrid");
-      let cls=isReal?" class='real'":"";
-      let s=t.stats;
-      let get=(n)=>{let f=s.find(x=>x.name===n); return f?f.value:0};
-      html+="<tr"+cls+"><td>"+(i+1)+"</td><td>"+t.team.displayName+(isReal?" 👑":"")+"</td><td>"+get('gamesPlayed')+"</td><td>"+get('wins')+"</td><td><b>"+get('points')+"</b></td></tr>";
-    });
-    html+="</table>";
-    document.getElementById('table').innerHTML=html;
-  }catch(e){document.getElementById('table').innerHTML="Table loading... refresh";}
-})
-.catch(()=>{document.getElementById('table').innerHTML="La Liga Table - Check back soon";});
+.then(r=>r.json()).then(d=>{
+  let entries=d.children[0].standings.entries.slice(0,3);
+  let html="<table><tr><th>#</th><th>Team</th><th>Pts</th></tr>";
+  entries.forEach((t,i)=>{let isReal=t.team.displayName.includes("Real Madrid"); let pts=t.stats.find(x=>x.name==='points').value; html+="<tr"+(isReal?" class='real'":"")+"><td>"+(i+1)+"</td><td>"+t.team.displayName+(isReal?" 👑":"")+"</td><td><b>"+pts+"</b></td></tr>";});
+  html+="</table>"; document.getElementById('top3').innerHTML=html;
+});
+fetch('https://site.api.espn.com/apis/site/v2/sports/soccer/esp.1/news?team=86&limit=3')
+.then(r=>r.json()).then(d=>{
+  if(d.articles && d.articles.length){
+    document.getElementById('newsPreview').innerHTML=d.articles.map(a=>"<p><b>"+a.headline+"</b><br><span style='font-size:13px'>"+(a.description||"").substring(0,120)+"...</span></p>").join('');
+  }
+});
 </script>
 </body>
 </html>
