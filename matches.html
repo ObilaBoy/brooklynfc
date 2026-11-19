@@ -1,92 +1,70 @@
 <!DOCTYPE html>
-<html>
-<head>
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<html><head><meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Matches - Real Madrid</title>
 <style>
 body{margin:0;font-family:Arial;background:#f5f5f5;text-align:center}
-nav{background:#0a0a0a;color:#d4af37;padding:12px;font-weight:bold;position:sticky;top:0}
+nav{background:#0a0a0a;color:#d4af37;padding:12px;font-weight:bold;position:sticky;top:0;z-index:100}
 nav a{color:#d4af37;text-decoration:none;margin:0 6px}
 .card{background:white;margin:12px;padding:16px;border-radius:12px;border-left:5px solid #d4af37;text-align:left}
-.matchRow{background:#fff8e1;padding:12px;border-radius:10px;margin:8px 0}
 table{width:100%;border-collapse:collapse;font-size:13px}
-th,td{padding:8px;border-bottom:1px solid #eee;text-align:left}
-th{background:#0a0a0a;color:#d4af37}
-tr.real{background:#fff3c4;font-weight:bold}
-button{background:#d4af37;border:none;padding:8px 14px;border-radius:8px;font-weight:bold;margin-top:6px}
+th{background:#0a0a0a;color:#d4af37;padding:8px}
+td{padding:8px;border-bottom:1px solid #ddd;text-align:center}
+td:first-child{text-align:left;font-weight:bold}
+.rm{background:#fff8e1;font-weight:bold}
+.match{border-bottom:1px solid #eee;padding:10px 0}
+.match b{font-size:15px}
+button{background:#d4af37;border:none;padding:7px 12px;border-radius:8px;font-weight:bold;cursor:pointer}
 </style>
 </head>
 <body>
 <nav><a href="index.html">HOME</a> <a href="team.html">TEAM</a> <a href="matches.html">MATCHES</a> <a href="news.html">NEWS</a></nav>
-<h1>📅 REAL MADRID - MATCHES</h1>
+<h1>⚽ REAL MADRID - MATCHES</h1>
 
 <div class="card">
-<h2>🔥 NEXT MATCH - FIRST!</h2>
-<div id="nextMatch" style="font-size:18px;font-weight:bold">Loading next match...</div>
-<p style="font-size:12px;color:grey">Auto-updates • ESPN</p>
+<h2>📅 UPCOMING FIXTURES</h2>
+<div class="match"><b>Real Madrid vs Getafe</b><br>22/11/2026 • Santiago Bernabéu • La Liga<br><button>▶ Highlights</button></div>
+<div class="match"><b>Real Madrid vs Olympiacos</b><br>25/11/2026 • Santiago Bernabéu • Champions League<br><button>▶ Highlights</button></div>
+<div class="match"><b>Girona vs Real Madrid</b><br>30/11/2026 • Montilivi • La Liga<br><button>▶ Highlights</button></div>
+<div class="match"><b>Real Madrid vs Celta Vigo</b><br>06/12/2026 • Santiago Bernabéu • La Liga<br><button>▶ Highlights</button></div>
 </div>
 
 <div class="card">
-<h2>📊 LAST 5 MATCHES</h2>
-<div id="last5">Loading last 5 results...</div>
-</div>
-
-<div class="card">
-<h2>📅 FULL FIXTURES - Next 8 Games</h2>
-<div id="fixtures">Loading fixtures...</div>
+<h2>✅ RECENT RESULTS</h2>
+<div class="match"><b>Real Madrid 2-1 Barcelona</b><br>18/10/2026 • Santiago Bernabéu<br><button>▶ Highlights</button></div>
+<div class="match"><b>Real Madrid 3-1 Villarreal</b><br>10/10/2026 • Santiago Bernabéu<br><button>▶ Highlights</button></div>
+<div class="match"><b>Atlético Madrid 1-2 Real Madrid</b><br>20/09/2026 • Riyadh Air Metropolitano<br><button>▶ Highlights</button></div>
+<div class="match"><b>Elche 0-2 Real Madrid</b><br>15/09/2026 • Estadio Martínez Valero<br><button>▶ Highlights</button></div>
+<div class="match"><b>Real Madrid 2-0 Rayo Vallecano</b><br>12/09/2026 • Santiago Bernabéu<br><button>▶ Highlights</button></div>
 </div>
 
 <div class="card">
 <h2>🏆 FULL LA LIGA TABLE - All 20 Teams</h2>
-<div id="table">Loading table...</div>
+<p style="font-size:12px;color:#666">Updated: 19 Nov 2026 • Season 2026/27</p>
+<table>
+<tr><th>#</th><th>Team</th><th>P</th><th>W</th><th>D</th><th>L</th><th>GF</th><th>GA</th><th>PTS</th></tr>
+<tr class="rm"><td>1</td><td>Real Madrid</td><td>12</td><td>10</td><td>2</td><td>0</td><td>28</td><td>9</td><td>32</td></tr>
+<tr><td>2</td><td>Barcelona</td><td>12</td><td>9</td><td>2</td><td>1</td><td>31</td><td>12</td><td>29</td></tr>
+<tr><td>3</td><td>Atlético Madrid</td><td>12</td><td>8</td><td>3</td><td>1</td><td>22</td><td>10</td><td>27</td></tr>
+<tr><td>4</td><td>Villarreal</td><td>12</td><td>8</td><td>1</td><td>3</td><td>24</td><td>14</td><td>25</td></tr>
+<tr><td>5</td><td>Real Betis</td><td>12</td><td>7</td><td>3</td><td>2</td><td>20</td><td>13</td><td>24</td></tr>
+<tr><td>6</td><td>Athletic Club</td><td>12</td><td>7</td><td>2</td><td>3</td><td>19</td><td>12</td><td>23</td></tr>
+<tr><td>7</td><td>Getafe</td><td>12</td><td>6</td><td>3</td><td>3</td><td>16</td><td>13</td><td>21</td></tr>
+<tr><td>8</td><td>Sevilla</td><td>12</td><td>6</td><td>2</td><td>4</td><td>18</td><td>15</td><td>20</td></tr>
+<tr><td>9</td><td>Real Sociedad</td><td>12</td><td>5</td><td>4</td><td>3</td><td>17</td><td>14</td><td>19</td></tr>
+<tr><td>10</td><td>Celta Vigo</td><td>12</td><td>5</td><td>3</td><td>4</td><td>18</td><td>16</td><td>18</td></tr>
+<tr><td>11</td><td>Valencia</td><td>12</td><td>5</td><td>2</td><td>5</td><td>15</td><td>17</td><td>17</td></tr>
+<tr><td>12</td><td>Girona</td><td>12</td><td>4</td><td>4</td><td>4</td><td>16</td><td>18</td><td>16</td></tr>
+<tr><td>13</td><td>Osasuna</td><td>12</td><td>4</td><td>3</td><td>5</td><td>14</td><td>16</td><td>15</td></tr>
+<tr><td>14</td><td>Rayo Vallecano</td><td>12</td><td>4</td><td>2</td><td>6</td><td>13</td><td>19</td><td>14</td></tr>
+<tr><td>15</td><td>Espanyol</td><td>12</td><td>3</td><td>4</td><td>5</td><td>12</td><td>18</td><td>13</td></tr>
+<tr><td>16</td><td>Mallorca</td><td>12</td><td>3</td><td>3</td><td>6</td><td>11</td><td>17</td><td>12</td></tr>
+<tr><td>17</td><td>Alavés</td><td>12</td><td>3</td><td>2</td><td>7</td><td>10</td><td>19</td><td>11</td></tr>
+<tr><td>18</td><td>Elche</td><td>12</td><td>2</td><td>4</td><td>6</td><td>11</td><td>20</td><td>10</td></tr>
+<tr><td>19</td><td>Levante</td><td>12</td><td>2</td><td>3</td><td>7</td><td>12</td><td>24</td><td>9</td></tr>
+<tr><td>20</td><td>Real Oviedo</td><td>12</td><td>1</td><td>3</td><td>8</td><td>8</td><td>22</td><td>6</td></tr>
+</table>
+<p style="font-size:12px">🟢 1-4 = Champions League • 🟡 5 = Europa League • 🔴 18-20 = Relegation</p>
 </div>
 
-<script>
-// NEXT + FIXTURES
-fetch('https://site.api.espn.com/apis/site/v2/sports/soccer/esp.1/teams/86/schedule')
-.then(r=>r.json()).then(d=>{
-  if(d.events && d.events.length){
-    let f=d.events[0];
-    document.getElementById('nextMatch').innerHTML = f.name+"<br>"+new Date(f.date).toLocaleString()+"<br>"+(f.competitions[0].venue.fullName||"Santiago Bernabéu")+"<br><a href='https://www.youtube.com/results?search_query="+encodeURIComponent(f.name+" highlights")+"' target='_blank'><button>▶ Watch Highlights (YouTube)</button></a>";
-    let html="";
-    d.events.slice(0,8).forEach(e=>{
-      html+="<div class='matchRow'><b>"+e.name+"</b><br>"+new Date(e.date).toLocaleDateString()+" • "+(e.competitions[0].venue.fullName||"")+"<br><a href='https://www.youtube.com/results?search_query="+encodeURIComponent(e.name+" highlights")+"' target='_blank'><button>▶ Highlights</button></a></div>";
-    });
-    document.getElementById('fixtures').innerHTML=html;
-  }
-}).catch(()=>{document.getElementById('nextMatch').innerHTML="Real Madrid vs Barcelona - El Clásico";});
-
-// LAST 5 - Use results endpoint via schedule with season? Fallback to ESPN scoreboard
-fetch('https://site.api.espn.com/apis/site/v2/sports/soccer/esp.1/teams/86/schedule?season=2025')
-.then(r=>r.json()).then(d=>{
-  // ESPN schedule only shows future, so show last 5 from past via scoreboard search - we use static fallback + live check
-  let past = [
-    {name:"Real Madrid 3-1 Valencia", date:"Last Match", hl:"Real Madrid vs Valencia highlights"},
-    {name:"Real Madrid 2-0 Getafe", date:"2 Matches Ago", hl:"Real Madrid vs Getafe highlights"},
-    {name:"Barcelona 1-2 Real Madrid", date:"El Clásico - WIN!", hl:"El Clasico highlights Real Madrid Barcelona"},
-    {name:"Real Madrid 4-0 Sevilla", date:"3 Matches Ago", hl:"Real Madrid vs Sevilla highlights"},
-    {name:"Real Madrid 2-1 Athletic Bilbao", date:"4 Matches Ago", hl:"Real Madrid vs Athletic Bilbao highlights"},
-  ];
-  let html="";
-  past.forEach(p=>{
-    html+="<div class='matchRow'><b>"+p.name+"</b><br>"+p.date+"<br><a href='https://www.youtube.com/results?search_query="+encodeURIComponent(p.hl)+"' target='_blank'><button>▶ Watch Highlights</button></a></div>";
-  });
-  document.getElementById('last5').innerHTML=html;
-});
-
-// FULL TABLE 20 TEAMS
-fetch('https://site.api.espn.com/apis/site/v2/sports/soccer/esp.1/standings')
-.then(r=>r.json()).then(d=>{
-  let entries=d.children[0].standings.entries;
-  let html="<table><tr><th>#</th><th>Team</th><th>P</th><th>W</th><th>D</th><th>L</th><th>Pts</th></tr>";
-  entries.forEach((t,i)=>{
-    let isReal=t.team.displayName.includes("Real Madrid");
-    let s=t.stats; let get=(n)=>{let f=s.find(x=>x.name===n); return f?f.value:0};
-    html+="<tr"+(isReal?" class='real'":"")+"><td>"+(i+1)+"</td><td>"+t.team.displayName+(isReal?" 👑":"")+"</td><td>"+get('gamesPlayed')+"</td><td>"+get('wins')+"</td><td>"+get('ties')+"</td><td>"+get('losses')+"</td><td><b>"+get('points')+"</b></td></tr>";
-  });
-  html+="</table>";
-  document.getElementById('table').innerHTML=html;
-});
-</script>
-</body>
-</html>
+<p><a href="index.html"><button>⬅ Back to Home</button></a></p>
+</body></html>
