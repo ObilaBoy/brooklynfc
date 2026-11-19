@@ -2,41 +2,61 @@
 <html>
 <head>
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Brooklyn FC</title>
+<title>Real Madrid - Hala Madrid!</title>
 <style>
-body{margin:0;font-family:Arial;background:#f2f2f2;text-align:center}
-nav{background:black;color:white;padding:12px;font-weight:bold}
-nav a{color:white;text-decoration:none;margin:0 8px}
-.header{background:#0b4d2e;color:white;padding:25px 15px}
-.card{background:white;margin:12px;padding:18px;border-radius:12px}
-button{background:#0b4d2e;color:white;border:none;padding:12px 20px;border-radius:8px;font-size:16px}
+body{margin:0;font-family:Arial;background:#f5f5f5;text-align:center}
+nav{background:#0a0a0a;color:#d4af37;padding:12px;font-weight:bold}
+nav a{color:#d4af37;text-decoration:none;margin:0 8px}
+.header{background:linear-gradient(180deg,#ffffff,#f9eec7);color:#0a0a0a;padding:25px 15px;border-bottom:4px solid #d4af37}
+.header h1{margin:5px;font-size:32px;letter-spacing:1px}
+.card{background:white;margin:12px;padding:18px;border-radius:12px;border-left:5px solid #d4af37}
+button{background:#d4af37;color:black;border:none;padding:12px 20px;border-radius:8px;font-size:16px;font-weight:bold}
 input{padding:12px;width:85%;margin:8px 0;border:1px solid #ccc;border-radius:8px;font-size:16px}
 #loginBox{display:none;position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,0.7);padding-top:100px}
 .loginInner{background:white;margin:20px;padding:20px;border-radius:12px}
 .remember{text-align:left;margin:5px 20px;font-size:14px}
 .remember input{width:auto;padding:0}
+.player{display:flex;align-items:center;gap:12px;text-align:left;background:#fff8e1;padding:10px;border-radius:10px;margin:8px 0}
+.player b{font-size:18px}
 </style>
 </head>
 <body>
 <nav>HOME TEAM MATCHES NEWS <a href="#" onclick="openLogin()">LOGIN</a> <a href="#" onclick="doLogout()">LOGOUT</a></nav>
 <div class="header">
-⚽<h1>BROOKLYN<br>FC</h1>⚽
-<p>Welcome to the best club in Lagos!<br>Home of Champions</p>
-<p id="welcomeMsg" style="color:yellow;font-weight:bold"></p>
+<div style="font-size:50px">👑</div>
+<h1>REAL MADRID<br>C.F.</h1>
+<p>Welcome to the best club in the world!<br>15x Champions League Winners - Hala Madrid!</p>
+<p id="welcomeMsg" style="color:#b8860b;font-weight:bold"></p>
 </div>
-<div class="card"><h3>🔥 Next Match</h3><p>Brooklyn FC vs Lagos Lions<br>Saturday, 10am - Brooklyn Stadium</p></div>
-<div class="card"><h3>⭐ Star Player</h3><p>No. 10 - Our Striker<br>25 Goals This Season!</p></div>
-<div class="card"><h3>📰 Latest News</h3><p>Brooklyn FC Wins Again!</p></div>
+
+<div class="card">
+<h3>🔥 Next Match - AUTO UPDATES!</h3>
+<p id="nextMatch">Loading Real Madrid's real next match...</p>
+<p style="font-size:12px;color:grey">Auto-updates from La Liga • Powered by TheSportsDB</p>
+</div>
+
+<div class="card">
+<h3>⭐ Star Players - Real Madrid</h3>
+<div class="player"><span style="font-size:30px">⚽</span><div><b>Kylian Mbappé - No. 9</b><br>Striker • France</div></div>
+<div class="player"><span style="font-size:30px">⚽</span><div><b>Vinícius Jr - No. 7</b><br>Winger • Brazil</div></div>
+<div class="player"><span style="font-size:30px">⚽</span><div><b>Jude Bellingham - No. 5</b><br>Midfielder • England</div></div>
+<div class="player"><span style="font-size:30px">🧤</span><div><b>Thibaut Courtois - No. 1</b><br>Goalkeeper • Belgium</div></div>
+</div>
+
+<div class="card"><h3>📰 Latest News</h3><p>Real Madrid Wins Again at the Bernabéu!<br>Hala Madrid y Nada Más!</p></div>
+
 <div id="loginBox"><div class="loginInner">
-<h2>Login to Brooklyn FC</h2>
+<h2>Login to Real Madrid</h2>
 <input id="nameInput" placeholder="Enter your name"><br>
 <input id="passInput" type="password" placeholder="Create / Enter password"><br>
 <div class="remember"><input type="checkbox" id="rememberCheck" checked> <label for="rememberCheck">Remember Me - Keep me logged in</label></div>
 <button onclick="doLogin()">LOGIN / CREATE ACCOUNT</button><br><br>
-<button onclick="closeLogin()" style="background:grey">Close</button>
+<button onclick="closeLogin()" style="background:grey;color:white">Close</button>
 <p id="loginMsg"></p>
 </div></div>
+
 <script>
+// --- LOGIN + REMEMBER ME (same as before) ---
 function openLogin(){
   let savedName=localStorage.getItem('bfc_name');
   let savedPass=localStorage.getItem('bfc_remember_pass');
@@ -67,7 +87,7 @@ function doLogin(){
     localStorage.removeItem('bfc_remember_pass');
     localStorage.setItem('bfc_remember','no');
   }
-  document.getElementById('welcomeMsg').innerHTML="Welcome back, "+name+"! 💚";
+  document.getElementById('welcomeMsg').innerHTML="Welcome back, "+name+"! 👑";
   setTimeout(closeLogin,1000);
 }
 function doLogout(){
@@ -75,11 +95,26 @@ function doLogout(){
   localStorage.removeItem('bfc_remember_pass');
   localStorage.setItem('bfc_remember','no');
   document.getElementById('welcomeMsg').innerHTML="";
-  alert("Logged out! See you soon!");
+  alert("Logged out! Hala Madrid!");
 }
 let saved=localStorage.getItem('bfc_name');
 let rem=localStorage.getItem('bfc_remember');
-if(saved && rem!=='no'){document.getElementById('welcomeMsg').innerHTML="Welcome back, "+saved+"! 💚";}
+if(saved && rem!=='no'){document.getElementById('welcomeMsg').innerHTML="Welcome back, "+saved+"! 👑";}
+
+// --- AUTO NEXT MATCH - Real Madrid ID 133739 ---
+fetch('https://www.thesportsdb.com/api/v1/json/3/eventsnext.php?id=133739')
+.then(r=>r.json())
+.then(d=>{
+  if(d.events && d.events[0]){
+    let e=d.events[0];
+    document.getElementById('nextMatch').innerHTML = "<b>"+e.strEvent+"</b><br>"+e.dateEvent+" • "+(e.strTime||"")+"<br>"+e.strLeague+" • "+(e.strVenue||"Santiago Bernabéu");
+  } else {
+    document.getElementById('nextMatch').innerHTML="Real Madrid vs Next Opponent<br>Check back soon - La Liga";
+  }
+})
+.catch(()=>{
+  document.getElementById('nextMatch').innerHTML="Real Madrid vs Barcelona - El Clásico<br>Saturday, Santiago Bernabéu";
+});
 </script>
 </body>
 </html>
