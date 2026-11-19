@@ -36,19 +36,19 @@ button:disabled{background:#555;color:#aaa}
 
 <div class="card">
 <h2>⚽ NEXT BIG MATCH</h2>
-<div class="match">⚪ REAL MADRID <span class="vs">VS</span> 🔵 BARCELONA<br><small style="font-size:14px;color:#aaa">El Clasico - Sunday 8pm - Santiago Bernabeu</small></div>
+<div class="match">⚪ REAL MADRID <span class="vs">VS</span> 🔵 CELTA VIGO<br><small style="font-size:14px;color:#aaa">El Clasico - Sunday 8pm - Santiago Bernabeu</small></div>
 <p>What will the score be?</p>
 <input id="fanName" placeholder="Your Name - e.g. Brooklyn">
 <div style="display:flex;gap:10px;justify-content:center;align-items:center">
 <input id="homeScore" type="number" placeholder="Madrid" style="width:35%;font-size:22px">
 <span style="font-size:30px">-</span>
-<input id="awayScore" type="number" placeholder="Barça" style="width:35%;font-size:22px">
+<input id="awayScore" type="number" placeholder="Celta" style="width:35%;font-size:22px">
 </div>
 <p>Who will win?</p>
 <select id="winnerPick">
 <option>⚪ Real Madrid Win</option>
 <option>🤝 Draw</option>
-<option>🔵 Barcelona Win</option>
+<option>🔵 Celta Vigo Win</option>
 </select>
 <button onclick="makePrediction()">🔥 LOCK MY PREDICTION!</button>
 <p id="myPred" style="color:#FFD700;font-weight:bold"></p>
@@ -63,7 +63,7 @@ button:disabled{background:#555;color:#aaa}
 <div class="card">
 <h2>🏆 How To Win Points</h2>
 <p>✅ Exact Score Right = <span class="points">+100 POINTS!</span><br>✅ Winner Right = <span class="points">+50 POINTS!</span><br>❌ Wrong = +10 for trying!<br><br>Top predictors go to <a href="leaderboard.html" style="color:#FFD700">Leaderboard!</a></p>
-<p><b>Brooklyn's Prediction:</b> Real Madrid 3 - 1 Barcelona! HALA MADRID! 🔥</p>
+<p><b>Brooklyn's Prediction:</b> Real Madrid 3 - 0 Celta Vigo! HALA MADRID! 🔥</p>
 </div>
 
 <script>
@@ -105,7 +105,7 @@ function makePrediction(){
   myName = n; localStorage.setItem('brooklynn_myname', n);
   let now = new Date().toLocaleTimeString([], {hour:'2-digit', minute:'2-digit'});
   predRef.push({name:n, score: h + " - " + a, winner:w, time:now});
-  document.getElementById('myPred').innerText = "✅ LOCKED! You predicted Real Madrid " + h + " - " + a + " Barcelona! Good luck! 🔥";
+  document.getElementById('myPred').innerText = "✅ LOCKED! You predicted Real Madrid " + h + " - " + a + " Celta Vigo! Good luck! 🔥";
   alert("PREDICTION LOCKED! 🔥 If you are right, you get +100 points!");
 }
 </script>
