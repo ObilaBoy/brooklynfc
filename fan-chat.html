@@ -3,15 +3,17 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>💬 Fan Chat - Brooklynn</title>
+<title>💬 Fan Chat LIVE - Brooklynn</title>
+<script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-database-compat.js"></script>
 <style>
 body{font-family:Arial,sans-serif;background:#0a0a0a;color:white;margin:0;padding:0;text-align:center}
 header{background:linear-gradient(90deg,#FFD700,#fff,#FFD700);color:black;padding:20px}
-header h1{margin:0;font-size:30px}
+header h1{margin:0;font-size:28px}
 nav{background:#111;padding:12px}
 nav a{color:#FFD700;text-decoration:none;margin:0 8px;font-weight:bold}
 .card{background:#1a1a1a;border:2px solid #FFD700;border-radius:15px;max-width:550px;margin:20px auto;padding:15px;text-align:left}
-#chatBox{height:350px;overflow-y:auto;background:#000;border-radius:10px;padding:12px;margin-bottom:12px}
+#chatBox{height:380px;overflow-y:auto;background:#000;border-radius:10px;padding:12px;margin-bottom:12px}
 .msg{background:#222;border-radius:12px;padding:10px 12px;margin:8px 0}
 .msg b{color:#FFD700}
 .msg small{color:#aaa;display:block;font-size:11px;margin-top:3px}
@@ -19,22 +21,23 @@ nav a{color:#FFD700;text-decoration:none;margin:0 8px;font-weight:bold}
 input,select{width:100%;padding:12px;margin:6px 0;border-radius:10px;border:none;font-size:16px;box-sizing:border-box}
 button{background:#FFD700;color:black;border:none;padding:13px 20px;border-radius:10px;font-weight:bold;font-size:16px;cursor:pointer;width:100%}
 button:hover{background:white}
-.emoji-row{display:flex;gap:8px;justify-content:center;margin:8px 0}
+.emoji-row{display:flex;gap:8px;justify-content:center;margin:8px 0;flex-wrap:wrap}
 .emoji-row span{font-size:24px;cursor:pointer;background:#222;padding:8px 12px;border-radius:10px}
 .online{color:#00ff88;font-weight:bold}
+#status{text-align:center;font-size:13px;color:#00ff88}
 </style>
 </head>
 <body>
-<header><h1>💬 BROOKLYNN FAN CHAT 💬</h1><p>Talk Madrid With Fans Worldwide!</p></header>
+<header><h1>💬 BROOKLYNN FAN CHAT - LIVE! 💬</h1><p>REAL Chat - Everyone Sees Everyone!</p></header>
 <nav>
 <a href="index.html">🏠 Home</a>
 <a href="fan-zone.html">Fan Zone</a>
 <a href="leaderboard.html">🏆 Leaderboard</a>
-<a href="fan-chat.html">💬 Fan Chat</a>
+<a href="fan-chat.html">💬 Fan Chat LIVE</a>
 </nav>
-
 <div class="card">
-<p><span class="online">● ONLINE NOW</span> — <span id="count">3 fans chatting</span> | Be kind! No insults! 👑</p>
+<p><span class="online">● LIVE</span> — <span id="count">Loading...</span> | Be kind! No insults! 👑</p>
+<p id="status">Connecting to Firebase... 🔥</p>
 <div id="chatBox"></div>
 <input id="fanName" placeholder="Your Name - e.g. Brooklyn">
 <select id="teamPick">
@@ -53,32 +56,40 @@ button:hover{background:white}
 <span onclick="addEmoji('SIUUU!')">SIUUU!</span>
 <span onclick="addEmoji('❤️')">❤️</span>
 </div>
-<button onclick="sendMsg()">🚀 SEND MESSAGE</button>
-<p style="text-align:center;color:#aaa;font-size:13px">Messages are saved on YOUR phone. Share this page with friends!</p>
+<button onclick="sendMsg()">🚀 SEND TO EVERYONE!</button>
+<p style="text-align:center;color:#aaa;font-size:13px">Powered by Firebase - FREE! Messages are LIVE for all fans!</p>
 </div>
-
 <script>
-let chats = JSON.parse(localStorage.getItem('brooklynn_chat') || '[]');
-if(chats.length===0){
-  chats = [
-    {name:"Brooklyn 👑", team:"⚪ Real Madrid Fan", text:"Welcome to my Fan Chat! HALA MADRID! 🔥", time:"Just now"},
-    {name:"Obilaboy", team:"⚪ Real Madrid Fan", text:"SIUUUU! Ronaldo is the GOAT 🐐", time:"Just now"},
-    {name:"Madrid Girl", team:"⚪ Real Madrid Fan", text:"Who is excited for El Clasico? ⚽", time:"Just now"}
-  ];
-  localStorage.setItem('brooklynn_chat', JSON.stringify(chats));
-}
-function showChat(){
+const firebaseConfig = {
+  apiKey: "AIzaSyBqx9ImUjW-OT31-9pCmyG6BZODZ15a1gk",
+  authDomain: "brooklynn-83301.firebaseapp.com",
+  databaseURL: "https://brooklynn-83301-default-rtdb.firebaseio.com",
+  projectId: "brooklynn-83301",
+  storageBucket: "brooklynn-83301.firebasestorage.app",
+  messagingSenderId: "1007783893715",
+  appId: "1:1007783893715:web:e4ad11f4d63aab8ef11226",
+  measurementId: "G-WV614K5MEQ"
+};
+firebase.initializeApp(firebaseConfig);
+const db = firebase.database();
+const chatRef = db.ref('chat');
+let myName = localStorage.getItem('brooklynn_myname') || "";
+if(myName) document.getElementById('fanName').value = myName;
+
+chatRef.limitToLast(50).on('value', (snap)=>{
+  let data = snap.val() || {};
+  let list = Object.values(data);
   let html = "";
-  let myName = localStorage.getItem('brooklynn_myname') || "";
-  chats.slice(-50).forEach(c=>{
+  list.forEach(c=>{
     let me = c.name === myName ? "me" : "";
     html += `<div class="msg ${me}"><b>${c.name}</b> ${c.team}<br>${c.text}<small>${c.time}</small></div>`;
   });
   let box = document.getElementById('chatBox');
-  box.innerHTML = html;
+  box.innerHTML = html || "<p style='text-align:center;color:#aaa'>No messages yet! Be FIRST! 👑</p>";
   box.scrollTop = box.scrollHeight;
-  document.getElementById('count').innerText = (chats.length + 2) + " messages";
-}
+  document.getElementById('count').innerText = list.length + " messages";
+  document.getElementById('status').innerText = "✅ CONNECTED! LIVE CHAT ON!";
+});
 function addEmoji(e){
   document.getElementById('fanMsg').value += " " + e + " ";
   document.getElementById('fanMsg').focus();
@@ -89,17 +100,13 @@ function sendMsg(){
   let t = document.getElementById('teamPick').value;
   if(!n){alert("Type your name first! 👑"); return;}
   if(!m){alert("Type a message!"); return;}
+  myName = n;
   localStorage.setItem('brooklynn_myname', n);
   let now = new Date().toLocaleTimeString([], {hour:'2-digit', minute:'2-digit'});
-  chats.push({name:n, team:t, text:m, time:now});
-  localStorage.setItem('brooklynn_chat', JSON.stringify(chats));
+  chatRef.push({name:n, team:t, text:m, time:now});
   document.getElementById('fanMsg').value = "";
-  showChat();
 }
 document.getElementById('fanMsg').addEventListener('keypress', function(e){ if(e.key==='Enter') sendMsg(); });
-let savedName = localStorage.getItem('brooklynn_myname');
-if(savedName) document.getElementById('fanName').value = savedName;
-showChat();
 </script>
 </body>
 </html>
