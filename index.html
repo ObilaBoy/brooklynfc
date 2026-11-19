@@ -18,6 +18,8 @@ input{padding:12px;width:85%;margin:8px 0;border:1px solid #ccc;border-radius:8p
 .remember{text-align:left;margin:5px 20px;font-size:14px}
 .remember input{width:auto;padding:0}
 .player{display:flex;align-items:center;gap:12px;text-align:left;background:#fff8e1;padding:10px;border-radius:10px;margin:8px 0}
+.player img{width:70px;height:70px;object-fit:cover;border-radius:50%;border:3px solid #d4af37;background:#ddd}
+.player b{font-size:17px}
 </style>
 </head>
 <body>
@@ -45,17 +47,33 @@ input{padding:12px;width:85%;margin:8px 0;border:1px solid #ccc;border-radius:8p
 
 <div class="card" id="teamSection">
 <h3>⭐ Star Players - Real Madrid</h3>
-<div class="player"><span style="font-size:30px">⚽</span><div><b>Kylian Mbappé - No. 9</b><br>Striker • France</div></div>
-<div class="player"><span style="font-size:30px">⚽</span><div><b>Vinícius Jr - No. 7</b><br>Winger • Brazil</div></div>
-<div class="player"><span style="font-size:30px">⚽</span><div><b>Jude Bellingham - No. 5</b><br>Midfielder • England</div></div>
-<div class="player"><span style="font-size:30px">🧤</span><div><b>Thibaut Courtois - No. 1</b><br>Goalkeeper • Belgium</div></div>
+
+<div class="player">
+<img src="https://a.espncdn.com/i/headshots/soccer/players/full/359520.png" onerror="this.src='https://upload.wikimedia.org/wikipedia/commons/thumb/1/1c/Kylian_Mbapp%C3%A9_2023.jpg/440px-Kylian_Mbapp%C3%A9_2023.jpg'">
+<div><b>Kylian Mbappé - No. 9</b><br>Striker • France • 45 Goals</div>
+</div>
+
+<div class="player">
+<img src="https://a.espncdn.com/i/headshots/soccer/players/full/415026.png" onerror="this.src='https://upload.wikimedia.org/wikipedia/commons/thumb/8/8c/Vinicius_Jr_2023.jpg/440px-Vinicius_Jr_2023.jpg'">
+<div><b>Vinícius Jr - No. 7</b><br>Winger • Brazil • 22 Goals</div>
+</div>
+
+<div class="player">
+<img src="https://a.espncdn.com/i/headshots/soccer/players/full/488365.png" onerror="this.src='https://upload.wikimedia.org/wikipedia/commons/thumb/6/6e/Jude_Bellingham_2023.jpg/440px-Jude_Bellingham_2023.jpg'">
+<div><b>Jude Bellingham - No. 5</b><br>Midfielder • England • 18 Goals</div>
+</div>
+
+<div class="player">
+<img src="https://a.espncdn.com/i/headshots/soccer/players/full/124498.png" onerror="this.src='https://upload.wikimedia.org/wikipedia/commons/thumb/9/9d/Thibaut_Courtois_2023.jpg/440px-Thibaut_Courtois_2023.jpg'">
+<div><b>Thibaut Courtois - No. 1</b><br>Goalkeeper • Belgium • 15 Clean Sheets</div>
+</div>
+
 </div>
 
 <div class="card" id="newsSection">
 <h3>📰 Latest News</h3>
 <p><b>Real Madrid Wins Again at the Bernabéu!</b><br>Hala Madrid y Nada Más!</p>
 <p><b>Mbappé scores again!</b><br>Another goal for No. 9 - Fans going crazy!</p>
-<p><b>Next El Clásico loading...</b><br>Check MATCHES above for the real date!</p>
 </div>
 
 <div id="loginBox"><div class="loginInner">
@@ -114,7 +132,6 @@ function doLogout(){
 let saved=localStorage.getItem('bfc_name');
 let rem=localStorage.getItem('bfc_remember');
 if(saved && rem!=='no'){document.getElementById('welcomeMsg').innerHTML="Welcome back, "+saved+"! 👑";}
-
 fetch('https://site.api.espn.com/apis/site/v2/sports/soccer/esp.1/teams/86/schedule')
 .then(r=>r.json())
 .then(d=>{
