@@ -24,7 +24,41 @@ button:disabled{background:#555;color:#aaa}
 .scorebox{font-size:50px;margin:10px}
 .points{color:#00ff88;font-weight:bold;font-size:22px}
 </style>
-<script src="fixtures-data.js"></script></head>
+<script src="fixtures-data.js"></script>
+<style>
+/* FIXED NAV - Brooklynn Clean Nav */
+nav{
+  background:#111;
+  padding:10px 0;
+  display:flex;
+  gap:8px;
+  overflow-x:auto;
+  white-space:nowrap;
+  scrollbar-width:none;
+  -webkit-overflow-scrolling:touch;
+  position:sticky;
+  top:0;
+  z-index:999;
+  border-bottom:2px solid #FFD700;
+}
+nav::-webkit-scrollbar{display:none}
+nav a{
+  color:#FFD700 !important;
+  text-decoration:none;
+  font-weight:bold;
+  font-size:14px;
+  padding:8px 14px;
+  background:#222;
+  border-radius:20px;
+  border:1px solid #333;
+  flex-shrink:0;
+}
+nav a:hover, nav a:active{
+  background:#FFD700;
+  color:black !important;
+}
+</style>
+</head>
 <body>
 <header><h1>🎮 PREDICT & WIN! 🎮</h1><p>Guess the score, Win +100 Points!</p></header>
 <nav>
