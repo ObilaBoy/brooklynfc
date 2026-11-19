@@ -24,7 +24,7 @@ button:disabled{background:#555;color:#aaa}
 .scorebox{font-size:50px;margin:10px}
 .points{color:#00ff88;font-weight:bold;font-size:22px}
 </style>
-</head>
+<script src="fixtures-data.js"></script></head>
 <body>
 <header><h1>🎮 PREDICT & WIN! 🎮</h1><p>Guess the score, Win +100 Points!</p></header>
 <nav>
@@ -108,6 +108,17 @@ function makePrediction(){
   document.getElementById('myPred').innerText = "✅ LOCKED! You predicted Real Madrid " + h + " - " + a + " Barcelona! Good luck! 🔥";
   alert("PREDICTION LOCKED! 🔥 If you are right, you get +100 points!");
 }
+</script>
+
+<script>
+window.addEventListener('load', ()=>{
+  let m = getNextMatch();
+  let el = document.querySelector('.match');
+  if(el) el.innerHTML = '⚪ ' + m.home.toUpperCase() + ' <span class="vs">VS</span> 🔵 ' + m.away.toUpperCase() + '<br><small style="font-size:14px;color:#aaa">' + m.display + ' - ' + m.stadium + ' - ' + m.comp + '</small>';
+  // Update winner dropdown
+  let sel = document.getElementById('winnerPick');
+  if(sel) sel.innerHTML = '<option>⚪ '+m.home+' Win</option><option>🤝 Draw</option><option>🔵 '+m.away+' Win</option>';
+});
 </script>
 </body>
 </html>
