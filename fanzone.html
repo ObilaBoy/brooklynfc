@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html><head><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Fan Zone - Real Madrid</title>
+<style>
+body{margin:0;font-family:Arial;background:#f5f5f5;text-align:center}
+nav{background:#0a0a0a;color:#d4af37;padding:12px;font-weight:bold;position:sticky;top:0;z-index:100}
+nav a{color:#d4af37;text-decoration:none;margin:0 5px;font-size:13px}
+.card{background:white;margin:12px;padding:16px;border-radius:12px;border-left:5px solid #d4af37;text-align:left}
+button{background:#d4af37;border:none;padding:10px 18px;border-radius:8px;font-weight:bold;cursor:pointer;margin:5px}
+.opt{display:block;background:#fff8e1;padding:12px;margin:8px 0;border-radius:10px;cursor:pointer;border:2px solid #eee;text-align:left}
+input{width:90%;padding:10px;border-radius:8px;border:1px solid #ccc;margin:5px 0}
+.bar{height:20px;background:#eee;border-radius:10px;margin:5px 0;overflow:hidden}
+.fill{height:100%;background:#d4af37}
+</style>
+</head>
+<body>
+<nav><a href="index.html">HOME</a> <a href="team.html">TEAM</a> <a href="matches.html">MATCHES</a> <a href="news.html">NEWS</a> <a href="legends.html">LEGENDS</a> <a href="fanzone.html">FAN ZONE</a> <a href="stadium.html">STADIUM</a> <a href="shop.html">SHOP</a></nav>
+<h1>🗳️ FAN ZONE</h1>
+<p>By Brooklyn • For Real Madrid Fans!</p>
+<div class="card">
+<h2>🗳️ POLL: Who is Man of the Match?</h2>
+<div id="poll">
+<button class="opt" onclick="vote('Mbappé')">⚡ Kylian Mbappé</button>
+<button class="opt" onclick="vote('Vini')">🎯 Vinícius Jr</button>
+<button class="opt" onclick="vote('Bellingham')">👑 Jude Bellingham</button>
+<button class="opt" onclick="vote('Trent')">🎯 Trent Alexander-Arnold</button>
+</div>
+<div id="poll-result"></div>
+</div>
+<div class="card">
+<h2>🧠 ENDLESS QUIZ - New Question Every Time!</h2>
+<p id="quiz-q" style="font-weight:bold;font-size:15px">Loading...</p>
+<div id="quiz-opts"></div>
+<p id="quiz-score" style="font-weight:bold;color:#d4af37"></p>
+</div>
+<div class="card">
+<h2>📣 SHOUTOUT WALL</h2>
+<input id="fan-name" placeholder="Your name - e.g. Brooklyn">
+<input id="fan-msg" placeholder="Your message - e.g. Hala Madrid from Lagos!">
+<br><button onclick="addShout()">📣 Post Shoutout</button>
+<div id="shouts" style="margin-top:10px"></div>
+</div>
+<div style="text-align:center;padding:20px;background:#0a0a0a;color:#d4af37;border-radius:12px;margin:12px"><b>👑 Created by Brooklyn 👑</b></div>
+<p><a href="index.html"><button>⬅ Back to Home</button></a></p>
+<script>
+let votes = JSON.parse(localStorage.getItem('rm_votes')||'{"Mbappé":12,"Vini":15,"Bellingham":18,"Trent":7}');
+function vote(name){ votes[name]=(votes[name]||0)+1; localStorage.setItem('rm_votes', JSON.stringify(votes)); showPoll(); alert('Thanks! You voted for '+name+'! 👑'); }
+function showPoll(){ let total=Object.values(votes).reduce((a,b)=>a+b,0); let html='<h3>Results - '+total+' votes:</h3>'; for(let k in votes){ let pct=Math.round(votes[k]/total*100); html+='<b>'+k+' - '+votes[k]+' votes ('+pct+'%)</b><div class="bar"><div class="fill" style="width:'+pct+'%"></div></div>'; } document.getElementById('poll-result').innerHTML=html; }
+showPoll();
+const quizPool=[
+ {q:"How many Champions Leagues has Real Madrid won?", opts:["13","14","15","16"], ans:2},
+ {q:"Who is Real Madrid top scorer EVER?", opts:["Raúl","Benzema","Cristiano Ronaldo","Di Stéfano"], ans:2},
+ {q:"What year was Real Madrid founded?", opts:["1900","1902","1910","1920"], ans:1},
+ {q:"Who scored the 93rd minute header in 2014 UCL Final?", opts:["Ronaldo","Bale","Ramos","Modrić"], ans:2},
+ {q:"How many trophies has Modrić won at Madrid?", opts:["22","25","28","30"], ans:2},
+ {q:"Who has the MOST appearances for Real Madrid?", opts:["Casillas","Raúl","Sanchís","Ramos"], ans:1},
+ {q:"Who has the MOST assists for Real Madrid?", opts:["Ronaldo","Modrić","Benzema","Zidane"], ans:2},
+ {q:"What is Real Madrid's biggest win ever?", opts:["11-1 vs Barça","8-0 vs Malmö","10-0 vs Elche","9-0 vs Sevilla"], ans:0},
+ {q:"What is the name of Real Madrid's stadium?", opts:["Camp Nou","Wembley","Santiago Bernabéu","Metropolitano"], ans:2},
+ {q:"How many goals did Ronaldo score for Madrid?", opts:["323","354","450","500"], ans:2},
+ {q:"Who won Ballon d'Or in 2022?", opts:["Messi","Ronaldo","Benzema","Modrić"], ans:2},
+ {q:"What is Brooklyn's website called?", opts:["Brooklynn","MadridFan","Hala Madrid","Obilaboy"], ans:0},
+];
+let quiz=[...quizPool].sort(()=>Math.random()-0.5); let qi=0, score=0, totalAnswered=0;
+function showQ(){ if(qi>=quiz.length){ quiz=[...quizPool].sort(()=>Math.random()-0.5); qi=0; } let cur=quiz[qi]; document.getElementById('quiz-q').textContent='Q'+(totalAnswered+1)+': '+cur.q+' (Score: '+score+'/'+totalAnswered+')'; let letters=['A','B','C','D']; document.getElementById('quiz-opts').innerHTML=cur.opts.map((o,i)=>'<button class="opt" onclick="answer('+i+')"><b>'+letters[i]+'.</b> '+o+'</button>').join(''); }
+function answer(i){ let cur=quiz[qi]; totalAnswered++; if(i===cur.ans){ score++; alert('✅ CORRECT! Score: '+score+'/'+totalAnswered); } else { alert('❌ Wrong! Correct answer: '+['A','B','C','D'][cur.ans]+'. '+cur.opts[cur.ans]); } qi++; showQ(); document.getElementById('quiz-score').textContent='Score: '+score+' / '+totalAnswered+' • Keep going!'; }
+showQ();
+let shouts=JSON.parse(localStorage.getItem('rm_shouts')||'[{"name":"Brooklyn","msg":"Hala Madrid! Best club in the world! 👑"}]');
+function renderShouts(){ document.getElementById('shouts').innerHTML=shouts.map(s=>'<div style="background:#fff8e1;padding:10px;border-radius:8px;margin:6px 0"><b>'+s.name+':</b> '+s.msg+'</div>').join(''); }
+function addShout(){ let n=document.getElementById('fan-name').value||'Fan'; let m=document.getElementById('fan-msg').value; if(!m) return alert('Write a message first!'); shouts.unshift({name:n,msg:m}); localStorage.setItem('rm_shouts', JSON.stringify(shouts)); renderShouts(); document.getElementById('fan-msg').value=''; }
+renderShouts();
+</script>
+</body></html>
