@@ -1,0 +1,55 @@
+<html>
+<head><meta charset="UTF-8">
+<title>Login - Brooklyn FC</title>
+<style>
+body { background:#0a3d1a; color:white; text-align:center; font-family:sans-serif; margin:0; }
+.nav { background:black; padding:25px 5px; }
+.nav a { color:white; text-decoration:none; margin:6px; font-weight:bold; font-size:22px; }
+h1 { font-size:78px; margin:30px 0 10px 0; line-height:1.0; }
+p { font-size:28px; }
+.box { background:white; color:black; width:98%; margin:25px auto; padding:40px 15px; border-radius:25px; }
+.box h2 { font-size:40px; }
+input { width:95%; padding:20px; margin:15px 0; border-radius:10px; border:1px solid #ccc; font-size:26px; }
+button { background:#0a3d1a; color:white; padding:20px; border:none; border-radius:10px; font-weight:bold; width:95%; font-size:28px; }
+#msg { font-size:28px; color:#0a3d1a; font-weight:bold; margin-top:15px; }
+</style>
+</head>
+<body>
+
+<div class="nav">
+<a href="index.html">HOME</a>
+<a href="team.html">TEAM</a>
+<a href="matches.html">MATCHES</a>
+<a href="news.html">NEWS</a>
+<a href="login.html">LOGIN</a>
+</div>
+
+<h1>LOGIN</h1>
+<p>Welcome back, Brooklyn Fan!</p>
+
+<div class="box">
+<h2>Login to your account</h2>
+<input id="user" type="text" placeholder="Username">
+<br>
+<input id="pass" type="password" placeholder="Password">
+<br>
+<button onclick="doLogin()">LOGIN</button>
+<p id="msg"></p>
+<p><small>Don't have an account? <a href="signup.html">SIGN UP FREE!</a></small></p>
+</div>
+
+<script>
+function doLogin(){
+  var u = document.getElementById("user").value;
+  var p = document.getElementById("pass").value;
+  if(u == "" || p == ""){
+    document.getElementById("msg").innerHTML = "⚠️ Please type Username and Password!";
+  } else {
+    document.getElementById("msg").innerHTML = "🎉 WELCOME BACK " + u + "! You are logged in!";
+    setTimeout(function(){ window.location.href="index.html"; }, 1500);
+  }
+}
+</script>
+
+</body>
+</html>
